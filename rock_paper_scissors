@@ -1,0 +1,52 @@
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+
+import random
+
+cpu = random.randint(0, 2)
+hands = [rock, paper, scissors]
+
+shake = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n"))
+
+if shake >= 3 or shake < 0:
+  print("Try again.")
+else:
+  print(hands[shake])
+  
+  print(f"Computer chose: {hands[cpu]}")
+  
+  
+  if shake == 0 and cpu == 2:
+      print("You win!")
+  elif shake == 2 and cpu == 0:
+    print("You lose!")
+  elif shake > cpu:
+    print("You win!")
+  elif shake < cpu:
+    print("You lose!")
+  elif shake == cpu:
+      print("It's a draw")
