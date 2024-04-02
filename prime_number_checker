@@ -1,0 +1,17 @@
+def prime_checker(number):
+  prime_list = []
+  for other_number in range(2, number):
+    if number % other_number == 0 and other_number != 1 and other_number != number:
+      prime_list += "0"
+    else:
+      prime_list += "1"
+
+  if "0" in prime_list:
+    print("It's not a prime number.")
+  elif number == 1:
+    print("It's not a prime number.")
+  else:
+    print("It's a prime number.")
+      
+n = int(input()) # Check this number
+prime_checker(number=n)
