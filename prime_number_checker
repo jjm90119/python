@@ -1,7 +1,7 @@
 def prime_checker(number):
   prime_list = []
   for other_number in range(2, number):
-    if number % other_number == 0 and other_number != 1 and other_number != number:
+    if number % other_number == 0:
       prime_list += "0" # if a number is cleanly divisible, it will add a "0" to prime_list
     else:
       prime_list += "1" # if a number is not cleanly divisable, it will add a "1" to prime_list
