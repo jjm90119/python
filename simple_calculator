@@ -23,11 +23,11 @@ operations = {
   }
 
 answers = []
-num1 = int(input("What's the first number?: "))
+num1 = float(input("What's the first number?: "))
 for symbols in operations:
   print(symbols)
 operation_symbol = input("Pick an operation: ")
-num2 = int(input("What's the next number?: "))
+num2 = float(input("What's the next number?: "))
 # operation_symbol calls the appropriate function
 math_function = operations[operation_symbol]
 first_answer = math_function(num1, num2)
@@ -42,7 +42,7 @@ while repeat == 0:
   else:
     operation_symbol = input("Pick an operation: ")
     math_function = operations[operation_symbol]
-    num3 = int(input("What's the next number?: "))
+    num3 = float(input("What's the next number?: "))
     new_answer = math_function(answers[-1], num3)
     answers.append(new_answer)
     print(f"{answers[-2]} {operation_symbol} {num3} = {new_answer}")
