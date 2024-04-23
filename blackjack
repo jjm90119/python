@@ -1,0 +1,132 @@
+import random
+from replit import clear
+# can use clear = lambda: print("\033c", end="", flush=True) instead
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+user_cards = []
+computer_cards = []
+next_round = 0
+hit = "y"
+initial_deal = 0
+user_score = 0
+computer_score = 0
+restart = "y"
+def deal_card():
+  '''deals 2 cards initially, then 1 card for every hit'''
+  global user_score
+  global computer_score
+  if next_round > 0 and hit == 'y':
+    user_cards.append(random.choice(cards))
+    user_score = sum(user_cards)
+    return user_score
+  elif hit == 'n':
+    while sum(computer_cards) < 17:
+      computer_cards.append(random.choice(cards))
+      computer_score = sum(computer_cards)
+  for deal in cards:
+    global initial_deal
+    while initial_deal < 2:
+      user_cards.append(random.choice(cards))
+      computer_cards.append(random.choice(cards))
+      initial_deal += 1
+  return user_cards, computer_cards
+
+def calculate_score(user_cards, computer_cards):
+  '''adds cards in respective hands and returns sum, returns 0 for the hand that has blackjack'''
+  global user_score
+  global computer_score
+  user_score = sum(user_cards)
+  computer_score = sum(computer_cards)
+  if user_score > 21:
+    if 11 in user_cards:
+      user_cards.remove(11)
+      user_cards.append(1)
+      return user_score
+  if computer_score > 21:
+    if 11 in computer_cards:
+      computer_cards.remove(11)
+      computer_cards.append(1)      
+      return computer_score
+  if len(user_cards) == 2 and len(computer_cards) == 2:
+    if user_score == 21:
+      user_score = 0
+      return user_score, computer_score
+    if computer_score == 21:
+      computer_score = 0
+      return user_score, computer_score
+    else:
+      return user_score, computer_score
+  else:
+    return user_score, computer_score  
+
+def compare(user_score, computer_score):
+  '''compares scores and determines winner'''
+  global hit
+  print(f"Your hand: {user_score}")
+  print(f"Opponent's hand: {computer_score}")
+  if computer_score == 0:
+    print("Blackjack! You lose.")
+    hit = ""
+    return()
+  if user_score == 0:
+    print("Blackjack! You Win!")
+    hit = ""
+    return()
+  if user_score > 21:
+    print("Bust! You lose.")
+    hit = ""
+    return()
+  if computer_score > 21:
+    print("Bust! You win.")
+    hit = ""
+    return()
+  if user_score == computer_score and hit == 'n':
+    print("It's a draw!")
+    return()
+  if user_score > computer_score and hit == 'n':
+    print("You win!")
+    return()
+  if user_score < computer_score and hit == 'n':
+    print("You lose.")
+    return()
+while restart == "y":
+  deal_card()
+  calculate_score(user_cards, computer_cards)
+  if user_score == 0 or computer_score == 0:
+    compare(user_score, computer_score)
+  else:
+    print(f"Your hand: {user_score}")
+    print(f"Opponent's hand: {computer_score}")
+  
+  while hit == "y": 
+    hit = input("Draw another card? Type 'y' for yes. Type 'n' for no:\n".lower())
+    while hit != 'y' or hit != 'n':
+      if hit == 'y' or hit == 'n':
+        break
+      hit = input("Invalid choice. Try again!\n".lower())
+      
+    if hit == 'y':   
+      next_round += 1
+      deal_card()
+      calculate_score(user_cards, computer_cards)
+      compare(user_score, computer_score)
+    elif hit == 'n':
+      deal_card()
+      compare(user_score, computer_score)
+
+  restart = input("Do you want to play again? Type 'y' for yes. Type 'n' for no.\n".lower())
+  while restart != 'y' or restart != 'n':
+    if restart == 'y' or restart == 'n':
+      break
+    restart = input("Invalid choice. Try again!\n".lower())
+  if restart == 'y':
+    clear()
+    user_cards = []
+    computer_cards = []
+    next_round = 0
+    hit = "y"
+    initial_deal = 0
+    user_score = 0
+    computer_score = 0
+    restart = "y"
+  else:
+    print("Game Over!")
