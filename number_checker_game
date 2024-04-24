@@ -1,0 +1,60 @@
+import random
+
+LIVES = 0
+ANSWER = random.randrange(1, 100)
+PLAYER_GUESS = 0
+def mode():
+  '''assigns max lives based on chosen difficulty'''
+  if DIFFICULTY == 'easy':
+    return LIVES + 10
+  else:
+    return LIVES + 5
+
+def guess():
+  '''displays remaining lives, receives player guess'''
+  global LIVES
+  while LIVES > 0:
+    print(f"You have {LIVES} attempts remaining to guess to number.")
+    PLAYER_GUESS = int(input("Make a guess: "))
+    return PLAYER_GUESS
+
+def compare():
+  '''compares guess to answer and tells player if too high or low'''
+  global LIVES
+  while LIVES > 0:
+    if PLAYER_GUESS > ANSWER:
+      LIVES -= 1
+      if LIVES > 0:
+        print("Too high.\nGuess again.")  
+        return
+      else:
+        print("Too high.\n You've run out of guesses. You lose.")
+        quit()
+    elif PLAYER_GUESS < ANSWER:
+      LIVES -= 1
+      if LIVES > 0:
+       print("Too low.\nGuess again.")      
+       return
+      else:
+        print("Too low.\nYou've run out of guesses. You lose.")
+        quit()
+    elif PLAYER_GUESS == ANSWER:
+      print(f"You got it! The answer was {ANSWER}.")
+      quit()
+print("Welcome to the Number Guessing Game!")
+print("I'm thinking of a number between 1 and 100.")
+
+DIFFICULTY = input("Choose a difficulty. Type 'easy' or 'hard': ".lower())
+while DIFFICULTY != 'easy' or DIFFICULTY != 'hard':
+  if DIFFICULTY == 'easy' or DIFFICULTY == 'hard':
+    break
+  DIFFICULTY = input("Invalid choice. Try again!\n".lower())
+
+LIVES = mode()
+
+while LIVES > 0:
+  PLAYER_GUESS = guess()
+  compare()
+
+if LIVES == 0:
+  print("You've run out of guesses. You lose.")
